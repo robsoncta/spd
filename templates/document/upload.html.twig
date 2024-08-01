@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Upload Document{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { 
+        margin: 15em auto; 
+        max-width: 800px; 
+        width: 95%; 
+        font: 20px/1.5 sans-serif; 
+        text-align: center;
+    }
+    .example-wrapper h1 { 
+        font-size: 30px; 
+        margin-bottom: 20px; 
+    }
+    .example-wrapper .form-group {
+        margin-bottom: 20px;
+    }
+    .example-wrapper .form-group input[type="file"] {
+        display: none;
+    }
+    .example-wrapper .form-group label {
+        display: inline-block;
+        padding: 13px 20px;
+        color: #fff;
+        background-color: #007bff;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .example-wrapper .form-group button {
+        display: inline-block;
+        padding: 10px 20px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 20px;
+    }
+    .example-wrapper .result {
+        margin-top: 20px;
+        text-align: left;
+    }
+    .example-wrapper .result h2 {
+        color: green;
+    }
+    .example-wrapper .result h2.error {
+        color: red;
+    }
+    .example-wrapper .file-preview img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="example-wrapper">
+    <h1>Faça upload de uma imagem para remover o fundo</h1>
+    <form action="{{ path('document_upload') }}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="filechoose">Faça upload</label>
+            <input type="file" name="document" id="filechoose" required>
+            <button class="btn btn-success mt-3" type="submit">Enviar</button>
+        </div>
+    </form>
+
+    {% if result is defined and result %}
+        <div class="result">
+            {% if result.success %}
+                <h2>Upload bem-sucedido!</h2>
+                <p><strong>Nome do arquivo:</strong> {{ result.filename }}</p>
+                <p><strong>Tempo de carregamento:</strong> {{ result.uploadTime }} segundos</p>
+                <p><strong>Tempo de OCR:</strong> {{ result.ocrTime }} segundos</p>
+                <div class="file-preview">
+                    <h3>Visualização do arquivo:</h3>
+                    <img src="{{ result.filePath }}" alt="File Preview">
+                </div>
+                <h3>Texto OCR:</h3>
+                <pre>{{ result.ocrText }}</pre>
+            {% else %}
+                <h2 class="error">Erro no upload!</h2>
+                <p>{{ result.message }}</p>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>Nenhum resultado disponível.</p>
+    {% endif %}
+</div>
+{% endblock %}

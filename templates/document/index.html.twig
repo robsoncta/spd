@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Upload Document{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Upload Document</h1>
+    <form action="{{ path('document_upload') }}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="filechoose">Choose File</label>
+            <input type="file" name="document" class="form-control-file" id="filechoose" required>
+            <button class="btn btn-success mt-3" type="submit">Upload</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
