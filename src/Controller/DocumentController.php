@@ -10,11 +10,47 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use thiagoalessio\TesseractOCR\TesseractOCR;
 use Psr\Log\LoggerInterface;
+use OpenApi\Annotations as OA;
 
 class DocumentController extends AbstractController
 {
+    /**
+     * @OA\Post(
+     *     path="/api/document/upload",
+     *     summary="Upload de documento",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="document",
+     *                     description="Arquivo de documento para upload",
+     *                     type="string",
+     *                     format="binary"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Resultado do upload e processamento OCR",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="success", type="boolean"),
+     *             @OA\Property(property="filename", type="string"),
+     *             @OA\Property(property="uploadTime", type="number"),
+     *             @OA\Property(property="ocrText", type="string"),
+     *             @OA\Property(property="ocrTime", type="number"),
+     *             @OA\Property(property="filePath", type="string"),
+     *             @OA\Property(property="message", type="string")
+     *         )
+     *     )
+     * )
+     */
     #[Route('/', name: 'homepage')]
-    #[Route('/document/upload', name: 'document_upload')]
+    #[Route('/api/document/upload', name: 'document_upload')]
     public function upload(Request $request, LoggerInterface $logger): Response
     {
         $result = null;
@@ -46,7 +82,6 @@ class DocumentController extends AbstractController
 
                     // Logging result
                     $logger->info('Upload and OCR processing successful', $result);
-
                 } catch (FileException $e) {
                     $result = [
                         'success' => false,
