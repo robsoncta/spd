@@ -1,4 +1,3 @@
-# Use uma imagem base oficial do Ubuntu
 FROM ubuntu:22.04
 
 # Atualiza a lista de pacotes e instala dependências essenciais
