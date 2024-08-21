@@ -1,11 +1,5 @@
 
 ## 
-Olá, time Vox Tecnologia
-
-Preparei o video abaixo no youtube com uma breve apresentação desse desafio. 
-
-https://youtu.be/5rGnWKC0dxg
-
 Swagger - http://localhost:8000/api/doc
 Aplicação - http://localhost:8000/
 
